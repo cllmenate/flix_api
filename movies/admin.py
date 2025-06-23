@@ -5,9 +5,9 @@ from movies.models import Movie
 # Register your models here.
 @admin.register(Movie)
 class MovieAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'genre', 'release_date', 'rating')
+    list_display = ('id', 'title', 'genre', 'release_date',)
     search_fields = ('title', 'genre',)
-    list_filter = ('genre', 'release_date', 'rating')
+    list_filter = ('genre', 'release_date',)
     ordering = ('-release_date',)
 
     def has_add_permission(self, request):

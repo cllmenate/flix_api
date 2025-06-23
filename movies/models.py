@@ -13,7 +13,6 @@ class Movie(models.Model):
     )
     description = models.TextField(blank=True, null=True)
     release_date = models.DateField()
-    rating = models.DecimalField(max_digits=3, decimal_places=1)
     duration = models.PositiveIntegerField(help_text="Duration in minutes")
     actors = models.ManyToManyField(
         Actor, 
