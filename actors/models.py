@@ -1,5 +1,6 @@
 from django.db import models
 
+
 NATIONALITIES = [
     ('AUSTRALIA', 'Austrália'),
     ('BRAZIL', 'Brasil'),
@@ -25,7 +26,6 @@ class Actor(models.Model):
         null=True
     )
     biography = models.TextField(blank=True, null=True)
-    
 
     def __str__(self):
         return self.name

@@ -17,9 +17,24 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from genres.views import GenreListCreateView, GenreRetrieveUpdateDestroyView
+from actors.views import ActorCreateListView, ActorRetrieveUpdateDestroyView
+
 
 urlpatterns = [
+    # Admin URL
     path('admin/', admin.site.urls),
-    path('genres/', GenreListCreateView.as_view(), name='genre-create-list-view'),
-    path('genres/<int:pk>/', GenreRetrieveUpdateDestroyView.as_view(), name='genre-detail-view'),
+    # Genre URLs
+    path('genres/', 
+         GenreListCreateView.as_view(), 
+         name = 'genre-create-list-view'),
+    path('genres/<int:pk>/', 
+         GenreRetrieveUpdateDestroyView.as_view(), 
+         name = 'genre-detail-view'),
+    # Actor URLs
+    path('actors/', 
+         ActorCreateListView.as_view(), 
+         name = 'actor-create-list-view'),
+    path('actors/<int:pk>/', 
+         ActorRetrieveUpdateDestroyView.as_view(), 
+         name = 'actor-detail-view'),
 ]
