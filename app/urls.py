@@ -16,8 +16,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from genres.views import GenreListCreateView, GenreRetrieveUpdateDestroyView
 from actors.views import ActorCreateListView, ActorRetrieveUpdateDestroyView
+from genres.views import GenreListCreateView, GenreRetrieveUpdateDestroyView
+from movies.views import MovieListCreateView, MovieRetrieveUpdateDestroyView
 
 
 urlpatterns = [
@@ -37,4 +38,11 @@ urlpatterns = [
     path('actors/<int:pk>/', 
          ActorRetrieveUpdateDestroyView.as_view(), 
          name = 'actor-detail-view'),
+    # Movie URLs
+    path('movies/',
+        MovieListCreateView.as_view(),
+        name='movie-create-list-view'),
+    path('movies/<int:pk>/',
+        MovieRetrieveUpdateDestroyView.as_view(),
+        name='movie-detail-view'),
 ]
