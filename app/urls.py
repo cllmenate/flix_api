@@ -19,18 +19,11 @@ from django.urls import path, include
 
 
 urlpatterns = [
-    # Admin URL
     path('admin/', admin.site.urls),
-
-    # Actor URLs
+    
+    path('api/v1/', include('authentication.urls')),
     path('api/v1/', include('actors.urls')),
-
-    # Genre URLs
     path('api/v1/', include('genres.urls')),
-         
-    # Movie URLs
     path('api/v1/', include('movies.urls')),
-
-    # Review URLs
     path('api/v1/', include('reviews.urls')),
 ]
