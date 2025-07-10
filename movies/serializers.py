@@ -15,7 +15,7 @@ class MovieSerializer(serializers.ModelSerializer):
 
         if rate:
             return round(rate, 1)
-        
+
         return None
 
     def validate_description(self, value):

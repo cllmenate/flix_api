@@ -15,14 +15,15 @@ NATIONALITIES = [
     ('OTHER', 'Outro'),
 ]
 
+
 # Create your models here.
 class Actor(models.Model):
     name = models.CharField(max_length=100, unique=True)
     date_of_birth = models.DateField(blank=True, null=True)
     nationality = models.CharField(
-        max_length=50, 
-        choices=NATIONALITIES, 
-        blank=True, 
+        max_length=50,
+        choices=NATIONALITIES,
+        blank=True,
         null=True
     )
     biography = models.TextField(blank=True, null=True)
