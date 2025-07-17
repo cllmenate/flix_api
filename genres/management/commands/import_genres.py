@@ -9,12 +9,12 @@ class Command(BaseCommand):
     def add_arguments(self, parser):
         parser.add_argument('file_path', type=str, help='Path to the CSV file containing genre data')
 
-    def handle(self, *args, **options):
+    def handle(self, **options):
         file_path = options['file_path']
         self.stdout.write(f'Importing genres from {file_path}...')
         # Logic to read the CSV file and import genres would go here
         try:
-            with open(file_path, 'r', encoding='utf-8') as file:
+            with open(file_path, 'r', encoding='utf-8-sig') as file:
                 reader = csv.DictReader(file)
                 for row in reader:
                     name = row.get('name')
