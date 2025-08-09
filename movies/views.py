@@ -1,5 +1,5 @@
-from django.db.models import Count
-from rest_framework import generics, views, response
+from django.db.models import Count, Avg
+from rest_framework import generics, views, response, status
 from rest_framework.permissions import IsAuthenticated
 from app.permissions import GlobalDefaultPermissionClass
 from movies.models import Movie
@@ -40,7 +40,7 @@ class MovieStatsView(views.APIView):
             .order_by('genre__name')
         )
         total_reviews = Review.objects.count()
-        average_rating = Review.objects.aggregate(average_rating=Count('rating'))['average_rating']
+        average_rating = Review.objects.aggregate(avg_rating=Avg('rating'))['avg_rating']
 
         return response.Response(
             data={
@@ -48,7 +48,7 @@ class MovieStatsView(views.APIView):
                 "total_movies": total_movies,
                 "movies_per_genre": movies_per_genre,
                 "total_reviews": total_reviews,
-                "average_rating": round(average_rating, 1) if average_rating else 0,
+                "average_rating": round(average_rating, 1) if average_rating is not None else 0,
             },
-            status=response.status.HTTP_200_OK,
+            status=status.HTTP_200_OK,
         )
