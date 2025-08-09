@@ -49,6 +49,6 @@ class MovieStatsView(views.APIView):
                 "movies_per_genre": movies_per_genre,
                 "total_reviews": total_reviews,
                 "average_rating": round(average_rating, 1) if average_rating is not None else 0,
-            },
-            status=status.HTTP_200_OK,
-        )
+            }
+        ),
+        status=status.HTTP_200_OK
