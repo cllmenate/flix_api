@@ -1,9 +1,9 @@
 from django.db.models import Count, Avg
-from rest_framework import generics, views, status, response
+from rest_framework import generics, views, response, status
 from rest_framework.permissions import IsAuthenticated
 from app.permissions import GlobalDefaultPermissionClass
 from movies.models import Movie
-from movies.serializers import MovieSerializer, MovieListDetailSerializer
+from movies.serializers import MovieSerializer, MovieListDetailSerializer, MovieStatsSerializer
 from reviews.models import Review
 
 
@@ -32,7 +32,7 @@ class MovieStatsView(views.APIView):
     permission_classes = (IsAuthenticated, GlobalDefaultPermissionClass,)
     queryset = Movie.objects.all()
 
-    def get(self, request, *args, **kwargs):
+    def get(self, request):
         total_movies = self.queryset.count()
         movies_per_genre = (
             self.queryset.values('genre__name')
@@ -42,13 +42,18 @@ class MovieStatsView(views.APIView):
         total_reviews = Review.objects.count()
         average_rating = Review.objects.aggregate(avg_rating=Avg('rating'))['avg_rating']
 
+        data = {
+            "message": "Movie statistics",
+            "total_movies": total_movies,
+            "movies_per_genre": list(movies_per_genre),
+            "total_reviews": total_reviews,
+            "average_rating": round(average_rating, 1) if average_rating else 0.0,
+        }
+
+        serializer = MovieStatsSerializer(data=data)
+        serializer.is_valid(raise_exception=True)
+
         return response.Response(
-            data={
-                "message": "Movie statistics",
-                "total_movies": total_movies,
-                "movies_per_genre": list(movies_per_genre),
-                "total_reviews": total_reviews,
-                "average_rating": round(average_rating, 1) if average_rating is not None else 0,
-            },
+            data=serializer.validated_data,
             status=status.HTTP_200_OK
         )
